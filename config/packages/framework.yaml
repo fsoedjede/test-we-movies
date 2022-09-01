@@ -17,6 +17,14 @@ framework:
     php_errors:
         log: true
 
+    http_client:
+        scoped_clients:
+            the-movie-db.client:
+                base_uri: '%env(resolve:THE_MOVIE_DB_API_URL)%'
+                headers:
+                    Authorization: 'Bearer %env(resolve:THE_MOVIE_DB_API_ACCESS_TOKEN)%'
+                    Content-Type: 'application/json;charset=utf-8'
+
 when@test:
     framework:
         test: true
