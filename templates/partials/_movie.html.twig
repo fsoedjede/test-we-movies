@@ -1,0 +1,39 @@
+{% set movieDetail = get_movie_detail(movie.id) %}
+<div class="card mb-3">
+    <div class="row p3">
+        <div class="col-md-3">
+            <img src="{{ config.images.secure_base_url ~ 'w185' ~ movieDetail.poster_path }}"
+                 class="img-fluid"
+                 alt="{{ movieDetail.title }}"/>
+        </div>
+        <div class="col-md-9">
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{ movieDetail.title }}
+                    <div class="rating d-inline">
+                        {% set score = (movieDetail.vote_average / 2)|round %}
+                        {% for i in 1..5 %}
+                            <span class="fa fa-star {{ loop.index < score ? 'checked' : '' }}"></span>
+                        {% endfor %}
+                        <span class="text-muted">({{ movieDetail.vote_count }} votes)</span>
+                    </div>
+                </h5>
+                <p class="card-text">
+                    <span>{{ movieDetail.release_date | slice(0,4) }}</span>
+                    -
+                    <span class="text-primary">
+                        {% for production_company in movieDetail.production_companies %}
+                            {{ production_company.name -}}
+                            {%- if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </span>
+                </p>
+                <p class="card-text">{{ movieDetail.overview }}</p>
+                <a href="{{ movieDetail.homepage }}"
+                   class="btn btn-primary float-md-end"
+                   role="button"
+                   data-id="{{ movieDetail.id }}" aria-pressed="true">Lire le details</a>
+            </div>
+        </div>
+    </div>
+</div>

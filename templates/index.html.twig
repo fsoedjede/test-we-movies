@@ -1,5 +1,71 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>test</h1>
+    <header>
+        <nav class="navbar bg-light">
+            <div class="container-xxl">
+                <a class="navbar-brand">A propos de We Movies</a>
+                <form class="d-flex" role="search">
+                    <div class="input-group">
+                        <input type="search" class="form-control" aria-label="Search" aria-describedby="search-span">
+                        <span class="input-group-text" id="search-span">
+                            <svg width="20" height="20" viewBox="0 0 20 20">
+                                <path d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z"
+                                      stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round"
+                                      stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container-xxl bd-gutter mt-3">
+        <section>
+            {% set firstPopularMovieDetail = get_movie_detail(firstPopularMovie['id']) %}
+            {% if firstPopularMovieDetail.videos.results|length > 0 %}
+                {% set video = firstPopularMovieDetail.videos.results|first %}
+                <div class="ratio ratio-16x9">
+                    <iframe src="https://www.youtube.com/embed/{{ video.key }}?rel=0"
+                            title="{{ firstPopularMovieDetail.title }}"
+                            allowfullscreen></iframe>
+                </div>
+            {% endif %}
+            <div class="summary">
+                <div class="image float-left">
+                    <img src="{{ config.images.secure_base_url ~ 'w185' ~ firstPopularMovieDetail.poster_path }}"
+                         class="img-fluid" alt="{{ firstPopularMovieDetail.title }}"/>
+                </div>
+                <div class="desc">
+                    <h3 class="title">{{ firstPopularMovieDetail.title }}</h3>
+                    <p class="description">{{ firstPopularMovieDetail.overview }}</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="container-xxl bd-gutter mt-3">
+        <div class="row">
+            <div id="genders" class="col-3">
+                <div class="form-check border border-dark">
+                    {% for genre in genres %}
+                        <div class="custom-control form-control-lg">
+                            <label class="form-check-label" for="genre-{{ genre.id }}">
+                                <input class="form-check-input" type="radio" value="{{ genre.id }}" name="genre" id="genre-{{ genre.id }}" data-genre="{{ genre.id }}">
+                                {{ genre.name }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-9">
+                <div id="movies">
+                    {% for movie in movies %}
+                        {% include 'partials/_movie.html.twig' with { movie, config } only %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -1,3 +1,10 @@
+@import '~bootstrap';
+@import '~font-awesome';
+
 body {
     background-color: lightgray;
+}
+
+div.rating span.checked {
+    color: #007bff;
 }
