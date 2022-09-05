@@ -1,0 +1,3 @@
+{% for movie in movies %}
+    {% include 'partials/_movie.html.twig' with { movie, config } only %}
+{% endfor %}

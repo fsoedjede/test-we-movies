@@ -10,3 +10,17 @@ import './styles/app.css';
 
 // start the Stimulus application
 import './bootstrap';
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Filter by genre
+    document.querySelectorAll('#genders input[type=radio]').forEach((genreRadio) => {
+        genreRadio.addEventListener('click', function () {
+            fetch('/discover?' + new URLSearchParams({with_genres: genreRadio.value}))
+                .then((response) => response.text())
+                .then((text) => {
+                    console.log(text)
+                    document.getElementById('movies').innerHTML = text;
+                });
+        })
+    });
+});
