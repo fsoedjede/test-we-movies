@@ -41,7 +41,7 @@ final class ConfigurationRepository
         }
     }
 
-    private function fetchFromApi()
+    private function fetchFromApi(): array
     {
         try {
             $response = $this->theMovieDbClient->request('GET', 'configuration');
