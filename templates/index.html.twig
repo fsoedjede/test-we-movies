@@ -16,7 +16,7 @@
 
     {% if firstPopularMovie is not null %}
     <div class="container-xxl bd-gutter mt-3">
-        <section>
+        <section class="border border-dark" style="position:relative;">
             {% set firstPopularMovieDetail = get_movie_detail(firstPopularMovie['id']) %}
             {% if firstPopularMovieDetail.videos.results|length > 0 %}
                 {% set video = firstPopularMovieDetail.videos.results|first %}
@@ -26,7 +26,7 @@
                             allowfullscreen></iframe>
                 </div>
             {% endif %}
-            <div class="summary">
+            <div class="summary text-light" style="position: absolute;bottom: 0;left: 0;">
                 <div class="image float-left">
                     <img src="{{ config.images.secure_base_url ~ 'w185' ~ firstPopularMovieDetail.poster_path }}"
                          class="img-fluid" alt="{{ firstPopularMovieDetail.title }}"/>
