@@ -8,6 +8,8 @@
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
 
+import 'bootstrap';
+
 // start the Stimulus application
 import './bootstrap';
 
@@ -18,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
             fetch('/discover?' + new URLSearchParams({with_genres: genreRadio.value}))
                 .then((response) => response.text())
                 .then((text) => {
-                    console.log(text)
                     document.getElementById('movies').innerHTML = text;
                 });
         })

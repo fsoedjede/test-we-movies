@@ -29,10 +29,53 @@
                     </span>
                 </p>
                 <p class="card-text">{{ movieDetail.overview }}</p>
-                <a href="{{ movieDetail.homepage }}"
+                <a href="#modal-movie-{{ movieDetail.id }}"
                    class="btn btn-primary float-md-end"
                    role="button"
-                   data-id="{{ movieDetail.id }}" aria-pressed="true">Lire le details</a>
+                   data-bs-toggle="modal"
+                   aria-pressed="true">
+                    Lire le details
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal-movie-{{ movieDetail.id }}"
+         data-bs-backdrop="static" data-bs-keyboard="false"
+         tabindex="-1"
+         aria-labelledby="modal-movie-{{ movieDetail.id }}"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-movie-{{ movieDetail.id }}">{{ movieDetail.title }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="detail-modal">
+                        {% if movieDetail.videos.results|length > 0 %}
+                            {% set video = movieDetail.videos.results|first %}
+                            <div class="ratio ratio-16x9">
+                                <iframe src="https://www.youtube.com/embed/{{ video.key }}?rel=0"
+                                        title="{{ movieDetail.title }}"
+                                        allowfullscreen></iframe>
+                            </div>
+                        {% endif %}
+                        <h2>{{ movieDetail.title }}</h2>
+                        <div class="rating d-inline">
+                            {% set score = (movieDetail.vote_average / 2)|round %}
+                            {% for i in 1..5 %}
+                                <span class="fa fa-star {{ loop.index < score ? 'checked' : '' }}"></span>
+                            {% endfor %}
+                            <b>{{ movieDetail.vote_average }}</b> ({{ movieDetail.vote_count }} votes)
+                        </div>
+                        <p class="description">{{ movieDetail.overview }}</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
