@@ -1,6 +1,9 @@
 index:
     path: /
     controller: App\Controller\IndexController
+search:
+    path: /search
+    controller: App\Controller\SearchController
 movie_list:
     path: /discover
     controller: App\Controller\MovieListController
