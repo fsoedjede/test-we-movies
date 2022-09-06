@@ -12,6 +12,13 @@ final class ConfigurationRepository
 {
     private const EXPIRATION_TIME = 60 * 60; // 1 hour
 
+    private array $defaults = [
+        'images' => [
+            'base_url' => 'http://image.tmdb.org/t/p/',
+            'secure_base_url' => 'https://image.tmdb.org/t/p/',
+        ]
+    ];
+
     public function __construct(
         private readonly HttpClientInterface $theMovieDbClient,
         private readonly CacheInterface $cache,
@@ -30,14 +37,14 @@ final class ConfigurationRepository
                     // Prevent cache when empty
                     $item->expiresAfter(1);
 
-                    return [];
+                    return $this->defaults;
                 }
 
                 return $data;
             });
         } catch (\Throwable $exception) {
             //@todo: use logger
-            return [];
+            return $this->defaults;
         }
     }
 
@@ -61,7 +68,7 @@ final class ConfigurationRepository
         } catch (\Throwable $e) {
             //@todo: use logger
 
-            return [];
+            return $this->defaults;
         }
     }
 }

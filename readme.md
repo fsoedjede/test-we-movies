@@ -16,4 +16,6 @@ $ yarn install
 $ yarn encore dev
 
 $ symfony serve
+# or Smoke test routes
+$ php bin/phpunit
 ```

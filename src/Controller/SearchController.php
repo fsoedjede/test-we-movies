@@ -20,7 +20,7 @@ final class SearchController extends AbstractController
     public function __invoke(Request $request): Response
     {
         return new JsonResponse(
-            $this->searchMovieRepository->search($request->query->get('query'))
+            $this->searchMovieRepository->search($request->query->get('query', ''))
         );
     }
 }
