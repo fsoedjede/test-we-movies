@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Autocomplete search
-$("input[name=search]").autocomplete({hint: false, minLength: 3}, [{
+$("input[name=search]").autocomplete({hint: false, debug: true, minLength: 3}, [{
     source: function (query, callback) {
         fetch('/search?' + new URLSearchParams({query: query}))
             .then((response) => response.json())
@@ -47,6 +47,6 @@ $("input[name=search]").autocomplete({hint: false, minLength: 3}, [{
             return `<a href="/view/${movie.id}"><img src="${baseUri}${movie.poster_path}" alt="${movie.id}"><span class="title">${movie.title}</span></div>`;
         }
     }
-}]).on('autocomplete:selected', function (event, suggestion) {
-    window.location.assign(suggestion.url);
+}]).on('autocomplete:selected', function (event, movie) {
+    window.location.assign('/view/'+movie.id);
 });

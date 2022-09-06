@@ -4,6 +4,11 @@ index:
 search:
     path: /search
     controller: App\Controller\SearchController
+movie_detail:
+    path: /view/{movieId}
+    controller: App\Controller\MovieDetailController
+    requirements:
+        movieId: '\d+'
 movie_list:
     path: /discover
     controller: App\Controller\MovieListController
